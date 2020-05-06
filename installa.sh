@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # [INFO] #####################################################################
-# Repo:		https://github.com/raphixnet/installa.git
+# https://bitbucket.org/raphix-platform/installa/src                                                                               
 # Arg1:		...                                                                                           
 # Developer:	Raphix                                                
 # EMail:	raphix(at)geekmail.de                                           
@@ -16,11 +16,19 @@
 ROOT_UID=0 # (0)
 E_NOTROOT=87 # (1)
 SUCCESS=0
+CFG_DIR=cfg/
+ROUTINES=()
 
 if [ "$UID" -ne "$ROOT_UID" ] # (3)
 then
   echo "Must be root to run this script."
   exit $E_NOTROOT
 fi
+
+while IFS= read -r line || [[ "$line" ]]; do
+  ROUTINES+=("$line")
+done < ${CFG_DIR}routines.cfg
+
+echo ${ROUTINES[@]}
 
 exit $SUCCESS
