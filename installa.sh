@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # [INFO] #####################################################################
-# https://bitbucket.org/raphix-platform/installa/src                                                                               
+# Repo:		https://github.com/raphixnet/installa.git
 # Arg1:		...                                                                                           
 # Developer:	Raphix                                                
 # EMail:	raphix(at)geekmail.de                                           
