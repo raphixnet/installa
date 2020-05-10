@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # [INFO] #####################################################################
-# https://bitbucket.org/raphix-platform/installa/src                                                                               
+# Repo:		https://github.com/raphixnet/installa.git
 # Arg1:		...                                                                                           
 # Developer:	Raphix                                                
 # EMail:	raphix(at)geekmail.de                                           
@@ -18,6 +18,7 @@ E_NOTROOT=87 # (1)
 SUCCESS=0
 CFG_DIR=cfg/
 ROUTINES=()
+ROUTINEARG=$1
 
 if [ "$UID" -ne "$ROOT_UID" ] # (3)
 then
@@ -29,6 +30,24 @@ while IFS= read -r line || [[ "$line" ]]; do
   ROUTINES+=("$line")
 done < ${CFG_DIR}routines.cfg
 
-echo ${ROUTINES[@]}
+function getCommand() {
+  declare -a hash=("${!1}")
+  REQROUTINE="$2"
+  for routine in "${hash[@]}"; do
+    set -f
+    stringtmp=${routine// /<s>}
+    array=(${stringtmp//:/ })
+    if [ "${array[0]}" = "$REQROUTINE" ]
+    then
+      echo "${array[1]//<s>/ }"
+    fi
+  done
+}
+
+function routine() {
+  eval $(getCommand ROUTINES[@] $1)
+}
+
+routine $ROUTINEARG
 
 exit $SUCCESS
